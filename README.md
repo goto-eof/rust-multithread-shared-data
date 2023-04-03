@@ -1,7 +1,7 @@
 # Multithreading in Rust
 Crates: crossterm, tokio, num_cpus, rand, reqwest
 
-Description: multithread application sample implemented using tokio
+Description: multithread application sample implemented using tokio. Every task access concurrently to a shared queue, makes a pop and simulates a processing job. 
 
 
 # Diagram
