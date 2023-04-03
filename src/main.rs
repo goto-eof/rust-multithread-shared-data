@@ -1,4 +1,5 @@
-use crossterm::{cursor, terminal, QueueableCommand};
+use crossterm::style::Stylize;
+use crossterm::{cursor, queue, style, terminal, QueueableCommand};
 use rand::Rng;
 use std::collections::VecDeque;
 use std::io::{stdout, Stdout, Write};
@@ -83,13 +84,14 @@ async fn clear_console(stdout_rw_lock: Arc<RwLock<Stdout>>) -> () {
 
 async fn print_message(stdout_rw_lock: Arc<RwLock<Stdout>>, line: u16, message: &str) -> () {
     let mut stdout = stdout_rw_lock.write().await;
-    stdout.queue(cursor::MoveTo(0, line)).unwrap();
-    stdout
-        .queue(terminal::Clear(terminal::ClearType::CurrentLine))
-        .unwrap();
-    stdout
-        .write_all(format!("task {} - {} ", line, message).as_bytes())
-        .unwrap();
+
+    let result = queue!(
+        stdout,
+        cursor::MoveTo(0, line),
+        terminal::Clear(terminal::ClearType::UntilNewLine),
+        style::PrintStyledContent(format!("task {} - {} ", line, message).green())
+    );
+    stdout.flush();
 }
 
 pub async fn read_data(set: Arc<RwLock<VecDeque<i32>>>) -> Option<i32> {
