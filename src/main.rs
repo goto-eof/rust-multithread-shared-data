@@ -91,7 +91,13 @@ async fn print_message(stdout_rw_lock: Arc<RwLock<Stdout>>, line: u16, message: 
         terminal::Clear(terminal::ClearType::UntilNewLine),
         style::PrintStyledContent(format!("task {} - {} ", line, message).green())
     );
-    stdout.flush();
+    if result.is_err() {
+        // do nothing
+    }
+    let result = stdout.flush();
+    if result.is_err() {
+        // do nothing
+    }
 }
 
 pub async fn read_data(set: Arc<RwLock<VecDeque<i32>>>) -> Option<i32> {
