@@ -1,12 +1,12 @@
 [package]
 name = "concurrency-test"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Andrei Dodu"]
 
 [dependencies]
 crossterm="0.26.1"
-tokio = { version = "1.27.0", features = ["full"] }
+tokio = { version = "1.27.0", features = ["rt", "rt-multi-thread", "macros"] }
 num_cpus="1.15.0"
 rand="0.8.5"
 reqwest="0.11.16"

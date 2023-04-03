@@ -7,7 +7,7 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 use tokio::task::{spawn_blocking, JoinHandle};
 
-#[tokio::main]
+#[tokio::main(flavor = "multi_thread")]
 async fn main() {
     let mut stdout_org = stdout();
     stdout_org
