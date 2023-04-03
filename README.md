@@ -1,5 +1,9 @@
 # Multithreading in Rust
+Crates: crossterm, tokio, num_cpus, rand, reqwest
+Description: multithread application implemented using tokio
 
+
+# Diagram
 ![multithread](multithread.png)
 
 
