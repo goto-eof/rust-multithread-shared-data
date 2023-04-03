@@ -20,6 +20,8 @@ async fn main() {
     let set: Arc<RwLock<VecDeque<i32>>> = Arc::new(RwLock::new(set));
     let stdout_rw_lock: Arc<RwLock<Stdout>> = Arc::new(RwLock::new(stdout_org));
 
+    stdout_rw_lock.write().await.queue(cursor::Hide).unwrap();
+
     let mut handlers = vec![];
     let cloned_stdout_rw_lock = stdout_rw_lock.clone();
     clear_console(cloned_stdout_rw_lock).await;
@@ -36,6 +38,7 @@ async fn main() {
     for handler in handlers {
         handler.await.unwrap();
     }
+    stdout_rw_lock.write().await.queue(cursor::Show).unwrap();
 }
 
 pub fn work_task(
